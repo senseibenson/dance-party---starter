@@ -230,4 +230,13 @@ let dancer = sprites.create(img`
     . . f f f f f f f f f f f f f .
 `)
 dancer.y=100
+function makearrow(){
+    let arrownumber= randint(0,3)
+let arrow = sprites.create(arrowImgs[arrownumber],SpriteKind.Food)
+
+}
+game.onUpdateInterval(500, function() {
+    makearrow()
+})
+
  
