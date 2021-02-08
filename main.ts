@@ -17,7 +17,14 @@ function setUpStopper () {
     true
     )
 }
+function makearrow () {
+    arrownumber = randint(0, 3)
+    arrow = sprites.create(arrowImgs[arrownumber], SpriteKind.Food)
+}
+let arrow: Sprite = null
+let arrownumber = 0
 let stopper: Sprite = null
+let arrowImgs: Image[] = []
 scene.setBackgroundImage(img`
     ................................................................................................................................................................
     ................................................................................................................................................................
@@ -140,24 +147,24 @@ scene.setBackgroundImage(img`
     33f99999999999999f33333333333333f9999999999999999f55555555555555f333333333333333f8888888888888888f7777777777777777f33333333333333333333f8888888888888888888888f7
     3f99999999999999f33333333333333f9999999999999999f555555555555555f333333333333333f88888888888888888f7777777777777777f33333333333333333333f8888888888888888888888f
     `)
-let arrowImgs = [img`
-    6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
-    6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
-    6 6 6 6 6 1 6 6 6 6 6 6 6 6 6 6
-    6 6 6 6 1 1 6 6 6 6 6 6 6 6 6 6
-    6 6 6 1 1 1 6 6 6 6 6 6 6 6 6 6
-    6 6 1 1 1 1 6 6 6 6 6 6 6 6 6 6
-    6 1 1 1 1 1 1 1 1 1 1 1 1 1 6 6
-    1 1 1 1 1 1 1 1 1 1 1 1 1 1 6 6
-    6 1 1 1 1 1 1 1 1 1 1 1 1 1 6 6
-    6 6 1 1 1 1 6 6 6 6 6 6 6 6 6 6
-    6 6 6 1 1 1 6 6 6 6 6 6 6 6 6 6
-    6 6 6 6 1 1 6 6 6 6 6 6 6 6 6 6
-    6 6 6 6 6 1 6 6 6 6 6 6 6 6 6 6
-    6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
-    6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
-    6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
-`, img`
+arrowImgs = [img`
+    6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+    6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+    6 6 6 6 6 1 6 6 6 6 6 6 6 6 6 6 
+    6 6 6 6 1 1 6 6 6 6 6 6 6 6 6 6 
+    6 6 6 1 1 1 6 6 6 6 6 6 6 6 6 6 
+    6 6 1 1 1 1 6 6 6 6 6 6 6 6 6 6 
+    6 1 1 1 1 1 1 1 1 1 1 1 1 1 6 6 
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 6 6 
+    6 1 1 1 1 1 1 1 1 1 1 1 1 1 6 6 
+    6 6 1 1 1 1 6 6 6 6 6 6 6 6 6 6 
+    6 6 6 1 1 1 6 6 6 6 6 6 6 6 6 6 
+    6 6 6 6 1 1 6 6 6 6 6 6 6 6 6 6 
+    6 6 6 6 6 1 6 6 6 6 6 6 6 6 6 6 
+    6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+    6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+    6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
+    `, img`
     6 6 6 6 6 6 6 6 1 6 6 6 6 6 6 6 
     6 6 6 6 6 6 6 1 1 1 6 6 6 6 6 6 
     6 6 6 6 6 6 1 1 1 1 1 6 6 6 6 6 
@@ -212,31 +219,24 @@ let arrowImgs = [img`
 setUpStopper()
 effects.hearts.startScreenEffect()
 let dancer = sprites.create(img`
-    . . . . f f f f f . . . . . . .
-    . . . f e e e e e f . . . . . .
-    . . f d d d d e e e f . . . . .
-    . c d f d d f d e e f f . . . .
-    . c d f d d f d e e d d f . . .
-    c d e e d d d d e e b d c . . .
-    c d d d d c d d e e b d c . . .
-    c c c c c d d e e e f c . . . .
-    . f d d d d e e e f f . . . . .
-    . . f e e e f f e e e f . . . .
-    . . f f f f f e e e e e f . f f
-    . . f d b f e e f f e e f . e f
-    . f f d d f e f f e e e f . e f
-    . f f f f f f e b b f e f f e f
-    . f d d f e e e d d b e f f f f
-    . . f f f f f f f f f f f f f .
-`)
-dancer.y=100
-function makearrow(){
-    let arrownumber= randint(0,3)
-let arrow = sprites.create(arrowImgs[arrownumber],SpriteKind.Food)
-
-}
-game.onUpdateInterval(500, function() {
+    . . . . f f f f f . . . . . . . 
+    . . . f e e e e e f . . . . . . 
+    . . f d d d d e e e f . . . . . 
+    . c d f d d f d e e f f . . . . 
+    . c d f d d f d e e d d f . . . 
+    c d e e d d d d e e b d c . . . 
+    c d d d d c d d e e b d c . . . 
+    c c c c c d d e e e f c . . . . 
+    . f d d d d e e e f f . . . . . 
+    . . f e e e f f e e e f . . . . 
+    . . f f f f f e e e e e f . f f 
+    . . f d b f e e f f e e f . e f 
+    . f f d d f e f f e e e f . e f 
+    . f f f f f f e b b f e f f e f 
+    . f d d f e e e d d b e f f f f 
+    . . f f f f f f f f f f f f f . 
+    `, 0)
+dancer.y = 100
+game.onUpdateInterval(500, function () {
     makearrow()
 })
-
- 
