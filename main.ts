@@ -230,3 +230,4 @@ let dancer = sprites.create(img`
     . . f f f f f f f f f f f f f .
 `)
 dancer.y=100
+ 
